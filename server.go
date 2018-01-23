@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"html/template"
 	"net/http"
 )
@@ -27,18 +28,26 @@ var editHandler http.HandlerFunc = func(w http.ResponseWriter, r *http.Request) 
 	case "1":
 		servers[0] = TFSHostedServer{account, TFSBuildDefinition{"", project, build}}
 		credentials[0] = TFSCredentials{username, password}
+		fmt.Println("Updated server:", servers[0])
+		fmt.Println("Updated credentials:", credentials[0])
 		break
 	case "2":
 		servers[1] = TFSHostedServer{account, TFSBuildDefinition{"", project, build}}
 		credentials[1] = TFSCredentials{username, password}
+		fmt.Println("Updated server:", servers[1])
+		fmt.Println("Updated credentials:", credentials[1])
 		break
 	case "3":
 		servers[2] = TFSHostedServer{account, TFSBuildDefinition{"", project, build}}
 		credentials[2] = TFSCredentials{username, password}
+		fmt.Println("Updated server:", servers[2])
+		fmt.Println("Updated credentials:", credentials[2])
 		break
 	case "4":
 		servers[3] = TFSHostedServer{account, TFSBuildDefinition{"", project, build}}
 		credentials[3] = TFSCredentials{username, password}
+		fmt.Println("Updated server:", servers[3])
+		fmt.Println("Updated credentials:", credentials[3])
 		break
 	}
 }
