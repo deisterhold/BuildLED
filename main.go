@@ -44,6 +44,13 @@ func main() {
 }
 
 func dance() {
+	unicorn.SetPixel(0, 0)
+	unicorn.SetPixel(0, 7)
+	unicorn.SetPixel(3, 0)
+	unicorn.SetPixel(3, 7)
+	unicorn.Show()
+	time.Sleep(time.Second * 2)
+
 	for y := 0; y < 4; y++ {
 		for x := 0; x < 8; x++ {
 			unicorn.SetPixel(x, y, 64, 0, 0)
@@ -65,6 +72,8 @@ func dance() {
 			time.Sleep(time.Millisecond * 50)
 		}
 	}
+	unicorn.Clear()
+	unicorn.Show()
 }
 
 func updateStatus() {
@@ -85,7 +94,7 @@ func updateStatus() {
 }
 
 func updateLED(x, y int, status TFSBuildStatus) {
-	switch status.Status {
+	switch status.Result {
 	case "succeeded":
 		unicorn.SetPixel(x, y, 0, 64, 0)
 		break
@@ -105,4 +114,6 @@ func updateLED(x, y int, status TFSBuildStatus) {
 		unicorn.SetPixel(x, y, 0, 0, 0)
 		break
 	}
+
+	fmt.Println(x, y, status.Status)
 }
