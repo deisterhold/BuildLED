@@ -25,14 +25,13 @@ func main() {
 		select {
 		case <-buildTimer.C:
 			fmt.Println("Build")
+			updateStatus()
 			break
 		case <-danceTimer.C:
 			fmt.Println("Dance")
 			break
 		}
 	}
-
-	// status, err := FetchBuild(server1, credentials1)
 }
 
 func updateStatus() {
