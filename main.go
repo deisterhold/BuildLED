@@ -45,8 +45,8 @@ func updateStatus() {
 		server := servers[y]
 		credential := credentials[y]
 		status, _ := FetchBuild(server, credential)
-		for x := 0; x < 8; x++ {
-			updateLED(x, y, status[x])
+		for x := 0; x < len(status); x++ {
+			updateLED(8-x, y, status[x])
 		}
 	}
 	unicorn.Show()
