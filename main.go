@@ -2,13 +2,17 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"time"
 )
 
 var unicorn = Unicorn{8, 4}
 
 func init() {
-	fmt.Println("Test")
+	for i := 0; i < 4; i++ {
+		servers[i] = TFSHostedServer{os.Getenv("VSTS_ACCOUNT"), TFSBuildDefinition{"", os.Getenv("VSTS_PROJECT"), os.Getenv("VSTS_BUILD_ID")}}
+		credentials[i] = TFSCredentials{os.Getenv("VSTS_USERNAME"), os.Getenv("VSTS_PASSWORD")}
+	}
 }
 
 func main() {
