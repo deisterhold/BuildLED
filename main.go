@@ -73,8 +73,12 @@ func updateStatus() {
 		credential := credentials[y]
 		status, _ := FetchBuild(server, credential)
 		fmt.Println(y, status)
-		for x := 0; x < len(status); x++ {
-			updateLED(8-x, y, status[x])
+		for x := 0; x < 8; x++ {
+			if x < len(status) {
+				updateLED(8-x, y, status[x])
+			} else {
+				unicorn.SetPixel(8-x, y, 0, 0, 0)
+			}
 		}
 	}
 	unicorn.Show()
