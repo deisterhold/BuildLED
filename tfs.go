@@ -5,8 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
-
-	ntlm "github.com/vadimi/go-http-ntlm"
+	// ntlm "github.com/vadimi/go-http-ntlm"
 )
 
 type TFSServer interface {
@@ -69,22 +68,22 @@ func (srv TFSHostedServer) BuildsURL() string {
 }
 
 func FetchBuild(srv TFSServer, cred TFSCredentials) ([]TFSBuildStatus, error) {
-	var client *http.Client
+	client := http.DefaultClient
 
-	switch srv.(type) {
-	case TFSOnPremServer:
-		client = &http.Client{
-			Transport: &ntlm.NtlmTransport{
-				Domain:   "CMCO",
-				User:     cred.Username,
-				Password: cred.Password,
-			},
-		}
-		break
-	case TFSHostedServer:
-		client = http.DefaultClient
-		break
-	}
+	// switch srv.(type) {
+	// case TFSOnPremServer:
+	// 	client = &http.Client{
+	// 		Transport: &ntlm.NtlmTransport{
+	// 			Domain:   "CMCO",
+	// 			User:     cred.Username,
+	// 			Password: cred.Password,
+	// 		},
+	// 	}
+	// 	break
+	// case TFSHostedServer:
+	// 	client = http.DefaultClient
+	// 	break
+	// }
 
 	req, _ := http.NewRequest("GET", srv.BuildsURL(), nil)
 	req.SetBasicAuth(cred.Username, cred.Password)
