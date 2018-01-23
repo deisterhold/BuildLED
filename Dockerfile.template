@@ -1,0 +1,27 @@
+FROM resin/%%RESIN_MACHINE_NAME%%-golang:slim
+
+ENV INITSYSTEM on
+
+# Copy required header files
+WORKDIR /usr/local/include
+COPY include/*.h ./
+
+# Copy static library
+WORKDIR /usr/local/lib
+COPY lib/libws2811.a ./
+
+# Copy go library
+WORKDIR /go/src/ws2811
+COPY ./ws2811 ./
+
+# Specify directory for go source
+WORKDIR /go/src/github.com/deisterhold/BuildLED
+
+# Copy over the source code
+COPY . ./
+
+# Build the executable
+RUN go build
+
+# Run the executable
+CMD ./BuildLED
