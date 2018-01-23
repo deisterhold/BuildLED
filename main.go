@@ -44,10 +44,10 @@ func main() {
 }
 
 func dance() {
-	unicorn.SetPixel(0, 0)
-	unicorn.SetPixel(0, 7)
-	unicorn.SetPixel(3, 0)
-	unicorn.SetPixel(3, 7)
+	unicorn.SetPixel(0, 0, 16, 16, 16)
+	unicorn.SetPixel(0, 7, 0, 0, 16)
+	unicorn.SetPixel(3, 0, 0, 16, 0)
+	unicorn.SetPixel(3, 7, 16, 0, 0)
 	unicorn.Show()
 	time.Sleep(time.Second * 2)
 
