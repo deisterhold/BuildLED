@@ -14,6 +14,8 @@ func init() {
 func main() {
 	unicorn.Init()
 	defer unicorn.CleanUp()
+	unicorn.Clear()
+	unicorn.Show()
 
 	exit := make(chan bool, 1)
 	go startServer(exit)
@@ -43,6 +45,7 @@ func updateStatus() {
 			updateLED(x, y, status[x])
 		}
 	}
+	unicorn.Show()
 }
 
 func updateLED(x, y int, status TFSBuildStatus) {
