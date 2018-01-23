@@ -45,6 +45,7 @@ func updateStatus() {
 		server := servers[y]
 		credential := credentials[y]
 		status, _ := FetchBuild(server, credential)
+		fmt.Println(y, status)
 		for x := 0; x < len(status); x++ {
 			updateLED(8-x, y, status[x])
 		}
