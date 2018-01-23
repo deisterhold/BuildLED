@@ -27,6 +27,8 @@ func main() {
 	buildTimer := time.NewTicker(time.Second * 10)
 	danceTimer := time.NewTicker(time.Hour)
 
+	dance()
+
 	for {
 		select {
 		case <-buildTimer.C:
@@ -35,7 +37,32 @@ func main() {
 			break
 		case <-danceTimer.C:
 			fmt.Println("Dance")
+			dance()
 			break
+		}
+	}
+}
+
+func dance() {
+	for y := 0; y < 4; y++ {
+		for x := 0; x < 8; x++ {
+			unicorn.SetPixel(x, y, 64, 0, 0)
+			unicorn.Show()
+			time.Sleep(time.Millisecond * 50)
+		}
+	}
+	for y := 0; y < 4; y++ {
+		for x := 0; x < 8; x++ {
+			unicorn.SetPixel(x, y, 0, 64, 0)
+			unicorn.Show()
+			time.Sleep(time.Millisecond * 50)
+		}
+	}
+	for y := 0; y < 4; y++ {
+		for x := 0; x < 8; x++ {
+			unicorn.SetPixel(x, y, 0, 0, 64)
+			unicorn.Show()
+			time.Sleep(time.Millisecond * 50)
 		}
 	}
 }
