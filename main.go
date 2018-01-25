@@ -28,6 +28,7 @@ func main() {
 	danceTimer := time.NewTicker(time.Hour)
 
 	dance()
+	updateStatus()
 
 	for {
 		select {
@@ -39,12 +40,14 @@ func main() {
 			fmt.Println("Dance")
 			dance()
 			break
+		default:
+			time.Sleep(time.Second)
 		}
 	}
 }
 
 func dance() {
-	unicorn.SetPixel(0, 0, 16, 16, 16)
+	unicorn.SetPixel(0, 0, 16, 0, 16)
 	unicorn.SetPixel(0, 3, 0, 0, 16)
 	unicorn.SetPixel(7, 0, 0, 16, 0)
 	unicorn.SetPixel(7, 3, 16, 0, 0)
@@ -78,19 +81,16 @@ func dance() {
 
 func updateStatus() {
 	for y := 0; y < 4; y++ {
-		server := servers[y]
-		credential := credentials[y]
-		status, _ := FetchBuild(server, credential)
-		fmt.Println(y, status)
+		status, _ := FetchBuild(servers[y], credentials[y])
 		for x := 0; x < 8; x++ {
 			if x < len(status) {
-				updateLED(8-x, y, status[x])
+				updateLED(7-x, y, status[x])
 			} else {
-				unicorn.SetPixel(8-x, y, 0, 0, 0)
+				updateLED(7-x, y, TFSBuildStatus{})
 			}
 		}
+		unicorn.Show()
 	}
-	unicorn.Show()
 }
 
 func updateLED(x, y int, status TFSBuildStatus) {
@@ -114,6 +114,4 @@ func updateLED(x, y int, status TFSBuildStatus) {
 		unicorn.SetPixel(x, y, 0, 0, 0)
 		break
 	}
-
-	fmt.Println(x, y, status.Status)
 }
