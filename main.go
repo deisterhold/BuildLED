@@ -9,7 +9,7 @@ import (
 var unicorn = Unicorn{8, 4}
 
 func init() {
-	for i := 0; i < 4; i++ {
+	for i := 0; i < unicorn.Height; i++ {
 		servers[i] = TFSHostedServer{os.Getenv("VSTS_ACCOUNT"), TFSBuildDefinition{"", os.Getenv("VSTS_PROJECT"), os.Getenv("VSTS_BUILD_ID")}}
 		credentials[i] = TFSCredentials{os.Getenv("VSTS_USERNAME"), os.Getenv("VSTS_PASSWORD")}
 	}
@@ -47,32 +47,25 @@ func main() {
 }
 
 func dance() {
-	unicorn.SetPixel(0, 0, 16, 0, 16)
-	unicorn.SetPixel(0, 3, 0, 0, 16)
-	unicorn.SetPixel(7, 0, 0, 16, 0)
-	unicorn.SetPixel(7, 3, 16, 0, 0)
-	unicorn.Show()
-	time.Sleep(time.Second * 2)
-
-	for y := 0; y < 4; y++ {
-		for x := 0; x < 8; x++ {
+	for y := 0; y < unicorn.Height; y++ {
+		for x := 0; x < unicorn.Width; x++ {
 			unicorn.SetPixel(x, y, 64, 0, 0)
 			unicorn.Show()
-			time.Sleep(time.Millisecond * 50)
+			time.Sleep(time.Millisecond * 25)
 		}
 	}
-	for y := 0; y < 4; y++ {
-		for x := 0; x < 8; x++ {
+	for y := 0; y < unicorn.Height; y++ {
+		for x := 0; x < unicorn.Width; x++ {
 			unicorn.SetPixel(x, y, 0, 64, 0)
 			unicorn.Show()
-			time.Sleep(time.Millisecond * 50)
+			time.Sleep(time.Millisecond * 25)
 		}
 	}
-	for y := 0; y < 4; y++ {
-		for x := 0; x < 8; x++ {
+	for y := 0; y < unicorn.Height; y++ {
+		for x := 0; x < unicorn.Width; x++ {
 			unicorn.SetPixel(x, y, 0, 0, 64)
 			unicorn.Show()
-			time.Sleep(time.Millisecond * 50)
+			time.Sleep(time.Millisecond * 25)
 		}
 	}
 	unicorn.Clear()
@@ -80,13 +73,13 @@ func dance() {
 }
 
 func updateStatus() {
-	for y := 0; y < 4; y++ {
+	for y := 0; y < unicorn.Height; y++ {
 		status, _ := FetchBuild(servers[y], credentials[y])
-		for x := 0; x < 8; x++ {
+		for x := 0; x < unicorn.Width; x++ {
 			if x < len(status) {
-				updateLED(7-x, y, status[x])
+				updateLED(unicorn.Width-(x+1), y, status[x])
 			} else {
-				updateLED(7-x, y, TFSBuildStatus{})
+				updateLED(unicorn.Width-(x+1), y, TFSBuildStatus{})
 			}
 		}
 		unicorn.Show()
