@@ -87,19 +87,26 @@ func updateStatus() {
 }
 
 func updateLED(x, y int, status TFSBuildStatus) {
-	switch status.Result {
-	case "succeeded":
-		unicorn.SetPixel(x, y, 0, 64, 0)
-		break
-	case "partiallySucceeded":
-		unicorn.SetPixel(x, y, 64, 32, 0)
-		break
-	case "failed":
-		unicorn.SetPixel(x, y, 64, 0, 0)
-		break
-	case "canceled":
-		unicorn.SetPixel(x, y, 64, 0, 64)
-		break
+	switch status.Status {
+	case "completed":
+		switch status.Result {
+		case "succeeded":
+			unicorn.SetPixel(x, y, 0, 64, 0)
+			break
+		case "partiallySucceeded":
+			unicorn.SetPixel(x, y, 64, 32, 0)
+			break
+		case "failed":
+			unicorn.SetPixel(x, y, 64, 0, 0)
+			break
+		case "canceled":
+			unicorn.SetPixel(x, y, 64, 0, 64)
+			break
+		default:
+			unicorn.SetPixel(x, y, 0, 0, 0)
+			fmt.Println(status)
+			break
+		}
 	case "inProgress":
 		unicorn.SetPixel(x, y, 0, 0, 64)
 		break
