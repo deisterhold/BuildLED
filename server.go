@@ -2,17 +2,14 @@ package main
 
 import (
 	"fmt"
-	"html/template"
 	"net/http"
 )
-
-var templates = template.Must(template.ParseFiles("templates/index.html"))
 
 var servers [4]TFSHostedServer
 var credentials [4]TFSCredentials
 
 var indexHandler http.HandlerFunc = func(w http.ResponseWriter, r *http.Request) {
-	templates.ExecuteTemplate(w, "index.html", nil)
+	fmt.Fprintf(w, "Testing")
 }
 
 var editHandler http.HandlerFunc = func(w http.ResponseWriter, r *http.Request) {
