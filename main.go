@@ -105,6 +105,7 @@ func updateLED(x, y int, status TFSBuildStatus) {
 		break
 	default:
 		unicorn.SetPixel(x, y, 0, 0, 0)
+		fmt.Println(status)
 		break
 	}
 }
