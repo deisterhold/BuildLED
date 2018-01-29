@@ -18,7 +18,7 @@ func (u *Unicorn) Init() error {
 func (u *Unicorn) SetPixel(x, y int, red, green, blue uint8) {
 	i := (y * u.Width) + x
 	var color uint32
-	color = uint32(red)<<16 | uint32(green)<<8 | uint32(blue)<<0
+	color = uint32(green)<<16 | uint32(red)<<8 | uint32(blue)<<0
 	ws2811.SetLed(i, color)
 }
 
