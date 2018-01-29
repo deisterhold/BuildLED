@@ -29,7 +29,8 @@ FROM resin/raspberry-pi-alpine
 ENV INITSYSTEM on
 
 # Copy the executable over
-COPY --from=build /go/src/github.com/deisterhold/BuildLED/BuildLED /usr/bin/BuildLED
+WORKDIR /root
+COPY --from=build /go/src/github.com/deisterhold/BuildLED/ ./
 
 # Run the executable
 CMD /usr/bin/BuildLED
