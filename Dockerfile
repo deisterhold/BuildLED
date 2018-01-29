@@ -24,12 +24,12 @@ COPY . ./
 # Build the executable
 RUN go build
 
-FROM resin/raspberry-pi-alpine-golang:slim
+FROM resin/raspberry-pi-alpine
 
 ENV INITSYSTEM on
 
 # Copy the executable over
-COPY --from=build /go/src/github.com/deisterhold/BuildLED/BuildLED ./
+COPY --from=build /go/src/github.com/deisterhold/BuildLED/BuildLED /usr/bin/BuildLED
 
 # Run the executable
-CMD ./BuildLED
+CMD /usr/bin/BuildLED
