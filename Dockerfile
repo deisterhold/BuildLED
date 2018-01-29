@@ -24,7 +24,7 @@ COPY . ./
 # Build the executable
 RUN go build
 
-FROM resin/resin/raspberry-pi-alpine-golang:slim
+FROM resin/raspberry-pi-alpine-golang:slim
 
 ENV INITSYSTEM on
 
