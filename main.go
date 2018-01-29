@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"os"
+	"os/signal"
+	"syscall"
 	"time"
 )
 
@@ -16,6 +18,13 @@ func init() {
 }
 
 func main() {
+	go func() {
+		sigs := make(chan os.Signal, 1)
+		signal.Notify(sigs, syscall.SIGTERM)
+		<-sigs
+		unicorn.CleanUp()
+	}()
+
 	unicorn.Init()
 	defer unicorn.CleanUp()
 	unicorn.Clear()
