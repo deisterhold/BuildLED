@@ -1,4 +1,4 @@
-FROM resin/raspberry-pi-alpine-golang:slim as build
+FROM resin/raspberry-pi-golang:slim as build
 
 ENV GOOS    linux
 ENV GOARCH  arm
