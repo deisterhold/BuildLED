@@ -31,5 +31,7 @@ func (u *Unicorn) Clear() {
 }
 
 func (u *Unicorn) CleanUp() {
+	u.Clear()
+	u.Show()
 	ws2811.Fini()
 }
