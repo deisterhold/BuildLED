@@ -15,10 +15,10 @@ func init() {
 	servers[1] = TFSOnPremServer{os.Getenv("TFS_INSTANCE"), TFSBuildDefinition{os.Getenv("TFS_COLLECTION"), os.Getenv("TFS_PROJECT_2"), os.Getenv("TFS_BUILD_ID_2")}}
 	servers[2] = TFSOnPremServer{os.Getenv("TFS_INSTANCE"), TFSBuildDefinition{os.Getenv("TFS_COLLECTION"), os.Getenv("TFS_PROJECT_3"), os.Getenv("TFS_BUILD_ID_3")}}
 	servers[3] = TFSOnPremServer{os.Getenv("TFS_INSTANCE"), TFSBuildDefinition{os.Getenv("TFS_COLLECTION"), os.Getenv("TFS_PROJECT_4"), os.Getenv("TFS_BUILD_ID_4")}}
-	credentials[0] = TFSCredentials{os.Getenv("TFS_USERNAME"),os.Getenv("TFS_PASSWORD"), os.Getenv("TFS_DOMAIN")}
-	credentials[1] = TFSCredentials{os.Getenv("TFS_USERNAME"),os.Getenv("TFS_PASSWORD"), os.Getenv("TFS_DOMAIN")}
-	credentials[2] = TFSCredentials{os.Getenv("TFS_USERNAME"),os.Getenv("TFS_PASSWORD"), os.Getenv("TFS_DOMAIN")}
-	credentials[3] = TFSCredentials{os.Getenv("TFS_USERNAME"),os.Getenv("TFS_PASSWORD"), os.Getenv("TFS_DOMAIN")}
+	credentials[0] = TFSCredentials{os.Getenv("TFS_USERNAME"), os.Getenv("TFS_PASSWORD"), os.Getenv("TFS_DOMAIN")}
+	credentials[1] = TFSCredentials{os.Getenv("TFS_USERNAME"), os.Getenv("TFS_PASSWORD"), os.Getenv("TFS_DOMAIN")}
+	credentials[2] = TFSCredentials{os.Getenv("TFS_USERNAME"), os.Getenv("TFS_PASSWORD"), os.Getenv("TFS_DOMAIN")}
+	credentials[3] = TFSCredentials{os.Getenv("TFS_USERNAME"), os.Getenv("TFS_PASSWORD"), os.Getenv("TFS_DOMAIN")}
 }
 
 func main() {
@@ -87,7 +87,8 @@ func dance() {
 
 func updateStatus() {
 	for y := 0; y < unicorn.Height; y++ {
-		status, _ := FetchBuild(servers[y], credentials[y])
+		status, err := FetchBuild(servers[y], credentials[y])
+		fmt.Println("Error:", err.Error())
 		for x := 0; x < unicorn.Width; x++ {
 			if x < len(status) {
 				updateLED(unicorn.Width-(x+1), y, status[x])
