@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
-	// ntlm "github.com/vadimi/go-http-ntlm"
+	 ntlm "github.com/vadimi/go-http-ntlm"
 )
 
 type TFSServer interface {
@@ -21,6 +21,7 @@ type TFSBuildDefinition struct {
 type TFSCredentials struct {
 	Username string
 	Password string
+	Domain string
 }
 
 type TFSOnPremServer struct {
@@ -44,7 +45,7 @@ type TFSBuildStatus struct {
 }
 
 func (srv TFSOnPremServer) BuildsURL() string {
-	baseURL := fmt.Sprintf("http://%s/%s/%s/_apis/build/builds", srv.Instance, url.PathEscape(srv.Definition.Collection), url.PathEscape(srv.Definition.Project))
+	baseURL := fmt.Sprintf("https://%s/%s/%s/_apis/build/builds", srv.Instance, url.PathEscape(srv.Definition.Collection), url.PathEscape(srv.Definition.Project))
 
 	query := url.Values{}
 	query.Add("api-version", "2.0")
@@ -68,22 +69,26 @@ func (srv TFSHostedServer) BuildsURL() string {
 }
 
 func FetchBuild(srv TFSServer, cred TFSCredentials) ([]TFSBuildStatus, error) {
+	if srv == nil {
+		return make([]TFSBuildStatus, 0), nil;
+	}
+
 	client := http.DefaultClient
 
-	// switch srv.(type) {
-	// case TFSOnPremServer:
-	// 	client = &http.Client{
-	// 		Transport: &ntlm.NtlmTransport{
-	// 			Domain:   "CMCO",
-	// 			User:     cred.Username,
-	// 			Password: cred.Password,
-	// 		},
-	// 	}
-	// 	break
-	// case TFSHostedServer:
-	// 	client = http.DefaultClient
-	// 	break
-	// }
+	 switch srv.(type) {
+	 case TFSOnPremServer:
+	 	client = &http.Client{
+	 		Transport: &ntlm.NtlmTransport{
+	 			Domain:   cred.Domain,
+	 			User:     cred.Username,
+	 			Password: cred.Password,
+	 		},
+	 	}
+	 	break
+	 case TFSHostedServer:
+	 	client = http.DefaultClient
+	 	break
+	 }
 
 	req, _ := http.NewRequest("GET", srv.BuildsURL(), nil)
 	req.SetBasicAuth(cred.Username, cred.Password)

@@ -8,7 +8,7 @@ type Unicorn struct {
 }
 
 func (u *Unicorn) Init() error {
-	fmt.Println("Windows")
+	fmt.Println("OS X")
 	return nil
 }
 

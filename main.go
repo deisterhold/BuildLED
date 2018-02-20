@@ -11,10 +11,14 @@ import (
 var unicorn = Unicorn{8, 4}
 
 func init() {
-	for i := 0; i < unicorn.Height; i++ {
-		servers[i] = TFSHostedServer{os.Getenv("VSTS_ACCOUNT"), TFSBuildDefinition{"", os.Getenv("VSTS_PROJECT"), os.Getenv("VSTS_BUILD_ID")}}
-		credentials[i] = TFSCredentials{os.Getenv("VSTS_USERNAME"), os.Getenv("VSTS_PASSWORD")}
-	}
+	servers[0] = TFSOnPremServer{os.Getenv("TFS_INSTANCE"), TFSBuildDefinition{os.Getenv("TFS_COLLECTION"), os.Getenv("TFS_PROJECT_1"), os.Getenv("TFS_BUILD_ID_1")}}
+	servers[1] = TFSOnPremServer{os.Getenv("TFS_INSTANCE"), TFSBuildDefinition{os.Getenv("TFS_COLLECTION"), os.Getenv("TFS_PROJECT_2"), os.Getenv("TFS_BUILD_ID_2")}}
+	servers[2] = TFSOnPremServer{os.Getenv("TFS_INSTANCE"), TFSBuildDefinition{os.Getenv("TFS_COLLECTION"), os.Getenv("TFS_PROJECT_3"), os.Getenv("TFS_BUILD_ID_3")}}
+	servers[3] = TFSOnPremServer{os.Getenv("TFS_INSTANCE"), TFSBuildDefinition{os.Getenv("TFS_COLLECTION"), os.Getenv("TFS_PROJECT_4"), os.Getenv("TFS_BUILD_ID_4")}}
+	credentials[0] = TFSCredentials{os.Getenv("TFS_USERNAME"),os.Getenv("TFS_PASSWORD"), os.Getenv("TFS_DOMAIN")}
+	credentials[1] = TFSCredentials{os.Getenv("TFS_USERNAME"),os.Getenv("TFS_PASSWORD"), os.Getenv("TFS_DOMAIN")}
+	credentials[2] = TFSCredentials{os.Getenv("TFS_USERNAME"),os.Getenv("TFS_PASSWORD"), os.Getenv("TFS_DOMAIN")}
+	credentials[3] = TFSCredentials{os.Getenv("TFS_USERNAME"),os.Getenv("TFS_PASSWORD"), os.Getenv("TFS_DOMAIN")}
 }
 
 func main() {
