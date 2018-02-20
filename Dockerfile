@@ -21,6 +21,9 @@ WORKDIR /go/src/github.com/deisterhold/BuildLED
 # Copy over the source code
 COPY . ./
 
+# Download any 3rd party libraries
+RUN go get
+
 # Build the executable
 RUN go build
 
