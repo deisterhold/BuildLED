@@ -7,6 +7,7 @@ import (
 	"net/url"
 
 	ntlm "github.com/vadimi/go-http-ntlm"
+	"crypto/tls"
 )
 
 type TFSServer interface {
@@ -83,6 +84,7 @@ func FetchBuild(srv TFSServer, cred TFSCredentials) ([]TFSBuildStatus, error) {
 				Domain:   cred.Domain,
 				User:     cred.Username,
 				Password: cred.Password,
+				TLSClientConfig: &tls.Config{InsecureSkipVerify:true},
 			},
 		}
 		break

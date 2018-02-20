@@ -88,7 +88,11 @@ func dance() {
 func updateStatus() {
 	for y := 0; y < unicorn.Height; y++ {
 		status, err := FetchBuild(servers[y], credentials[y])
-		fmt.Println("Error:", err.Error())
+
+		if err != nil {
+			fmt.Println("Error:", err.Error())
+		}
+
 		for x := 0; x < unicorn.Width; x++ {
 			if x < len(status) {
 				updateLED(unicorn.Width-(x+1), y, status[x])
