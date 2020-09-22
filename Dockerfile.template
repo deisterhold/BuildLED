@@ -1,4 +1,4 @@
-FROM resin/raspberry-pi-golang:slim as build
+FROM resin/%%RESIN_MACHINE_NAME%%-golang:slim as build
 
 ENV GOOS    linux
 ENV GOARCH  arm
@@ -27,7 +27,7 @@ RUN go get
 # Build the executable
 RUN go build
 
-#FROM resin/raspberry-pi-debian:latest
+#FROM resin/%%RESIN_MACHINE_NAME%%-debian:latest
 
 ENV INITSYSTEM on
 
